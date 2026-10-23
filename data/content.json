@@ -15,5 +15,21 @@
   {"id": "philo", "name": "الفلسفة"},
   {"id": "islamic", "name": "العلوم الإسلامية"}
  ],
- "items": []
+ "items": [
+  {
+   "id": "l1", "level": "3as", "subject": "math", "chapter": "المتتاليات العددية", "type": "lesson",
+   "title": "المتتاليات الحسابية والهندسية: ملخص وتمارين", "url": "", "date": "2026-10-23",
+   "body": "<h3>المتتالية الحسابية</h3><div class='bx'>u<sub>n+1</sub> = u<sub>n</sub> + r (r هو الأساس)<br>u<sub>n</sub> = u<sub>0</sub> + n·r = u<sub>p</sub> + (n − p)·r<br>مجموع حدود متتابعة = (عدد الحدود) × (الحد الأول + الحد الأخير) / 2</div><h3>المتتالية الهندسية</h3><div class='bx'>u<sub>n+1</sub> = q·u<sub>n</sub> (q هو الأساس)<br>u<sub>n</sub> = u<sub>0</sub>·q<sup>n</sup><br>المجموع من u<sub>0</sub> إلى u<sub>n</sub> = u<sub>0</sub> × (1 − q<sup>n+1</sup>) / (1 − q) حيث q ≠ 1</div><h3>الاتجاه والنهاية</h3><p>تكون (u<sub>n</sub>) متزايدة إذا كان u<sub>n+1</sub> − u<sub>n</sub> ≥ 0 من أجل كل n. وإذا كان |q| &lt; 1 فإن q<sup>n</sup> تؤول إلى 0، وإذا كان q &gt; 1 فإن q<sup>n</sup> تؤول إلى +∞.</p><h3>مثالان</h3><p>حسابية: u<sub>0</sub> = 3 و r = 2. إذن u<sub>10</sub> = 3 + 20 = 23، والمجموع من u<sub>0</sub> إلى u<sub>10</sub> هو 11 × (3 + 23) / 2 = 143.</p><p>هندسية: u<sub>0</sub> = 2 و q = 3. إذن u<sub>4</sub> = 2 × 81 = 162، والمجموع من u<sub>0</sub> إلى u<sub>4</sub> هو 2 × (1 − 243) / (1 − 3) = 242.</p><h3>تمرين</h3><p>(u<sub>n</sub>) متتالية هندسية فيها u<sub>0</sub> = 5 و q = 1/2. احسب u<sub>3</sub> ومجموع الحدود من u<sub>0</sub> إلى u<sub>3</sub>.</p><div class='bx'><b>الحل:</b> u<sub>3</sub> = 5 × (1/2)<sup>3</sup> = 5/8. المجموع = 5 × (1 − 1/16) / (1/2) = 75/8 = 9.375.</div>"
+  },
+  {
+   "id": "l2", "level": "3as", "subject": "math", "chapter": "الاشتقاقية", "type": "lesson",
+   "title": "قواعد الاشتقاق والمماس واتجاه التغير", "url": "", "date": "2026-10-23",
+   "body": "<h3>المشتقات الأساسية</h3><div class='bx'>(c)' = 0 &nbsp;|&nbsp; (x<sup>n</sup>)' = n·x<sup>n−1</sup> &nbsp;|&nbsp; (1/x)' = −1/x² &nbsp;|&nbsp; (√x)' = 1/(2√x)<br>(sin x)' = cos x &nbsp;|&nbsp; (cos x)' = −sin x &nbsp;|&nbsp; (e<sup>x</sup>)' = e<sup>x</sup> &nbsp;|&nbsp; (ln x)' = 1/x</div><h3>قواعد العمليات</h3><div class='bx'>(u + v)' = u' + v' &nbsp;|&nbsp; (k·u)' = k·u'<br>(u·v)' = u'v + uv' &nbsp;|&nbsp; (u/v)' = (u'v − uv') / v²<br>(u<sup>n</sup>)' = n·u'·u<sup>n−1</sup> &nbsp;|&nbsp; (e<sup>u</sup>)' = u'·e<sup>u</sup> &nbsp;|&nbsp; (ln u)' = u'/u</div><h3>معادلة المماس</h3><div class='bx'>معادلة المماس لمنحنى f عند النقطة ذات الفاصلة a هي: y = f'(a)·(x − a) + f(a)</div><h3>اتجاه التغير</h3><p>إذا كان f'(x) &gt; 0 على مجال فإن f متزايدة عليه، وإذا كان f'(x) &lt; 0 فإن f متناقصة. وإذا انعدمت f' وغيّرت إشارتها عند نقطة فهناك قيمة حدية.</p><h3>مثال</h3><p>f(x) = x² − 3x + 2. المشتقة f'(x) = 2x − 3. عند a = 1: f(1) = 0 و f'(1) = −1، إذن المماس هو y = −x + 1.</p><h3>تمرين</h3><p>f(x) = x·e<sup>x</sup>. احسب f' ثم ادرس اتجاه تغير f.</p><div class='bx'><b>الحل:</b> f'(x) = e<sup>x</sup> + x·e<sup>x</sup> = (1 + x)·e<sup>x</sup>. بما أن e<sup>x</sup> &gt; 0 فإشارة f' هي إشارة (1 + x). إذن f متناقصة على ]−∞ ; −1] ومتزايدة على [−1 ; +∞[، وقيمتها الحدية الصغرى f(−1) = −1/e.</div>"
+  },
+  {
+   "id": "l3", "level": "3as", "subject": "math", "chapter": "الأعداد المركبة", "type": "lesson",
+   "title": "الأعداد المركبة: الأساسيات والشكل المثلثي", "url": "", "date": "2026-10-23",
+   "body": "<h3>التعريف</h3><div class='bx'>i² = −1. كل عدد مركب يكتب z = a + ib حيث a و b حقيقيان.<br>المرافق: z̄ = a − ib<br>الطويلة: |z| = √(a² + b²)، وكذلك z·z̄ = |z|²</div><h3>الشكل المثلثي</h3><div class='bx'>z = r(cos θ + i sin θ) حيث r = |z| و θ = arg(z)<br>|z<sub>1</sub>·z<sub>2</sub>| = |z<sub>1</sub>|·|z<sub>2</sub>|<br>arg(z<sub>1</sub>·z<sub>2</sub>) = arg(z<sub>1</sub>) + arg(z<sub>2</sub>)</div><h3>حل معادلة من الدرجة الثانية</h3><div class='bx'>az² + bz + c = 0 مع Δ = b² − 4ac. إذا كان Δ &lt; 0 فالحلان: z = (−b ± i√(−Δ)) / (2a)</div><h3>أمثلة</h3><p>z = 1 + i: الطويلة √2 والعمدة π/4، إذن z = √2(cos π/4 + i sin π/4). والتحقق: z² = 1 + 2i − 1 = 2i.</p><p>المعادلة z² + 2z + 5 = 0: Δ = 4 − 20 = −16، إذن z = (−2 ± 4i)/2 = −1 ± 2i.</p><h3>تمرين</h3><p>احسب (2 + 3i)(1 − i).</p><div class='bx'><b>الحل:</b> 2 − 2i + 3i − 3i² = 2 + i + 3 = 5 + i.</div>"
+  }
+ ]
 }
