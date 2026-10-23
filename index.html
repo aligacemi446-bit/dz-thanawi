@@ -32,6 +32,13 @@ h2{font-size:1.05rem;margin:1.6rem 0 .6rem;padding-right:.7rem;border-right:4px 
 #w{width:100%;max-width:800px;aspect-ratio:16/9;position:relative}
 #w iframe,#w video{width:100%;height:100%;border:0;border-radius:6px;background:#000}
 #x{position:absolute;top:-2.4rem;left:0;background:#fff;border:0;border-radius:6px;padding:.3rem .9rem;cursor:pointer;font:inherit}
+.lk{margin-top:.5rem}
+#r{position:fixed;inset:0;background:var(--bg);display:none;overflow:auto;padding:1rem}
+#r.o{display:block}
+#r article{max-width:720px;margin:auto;line-height:1.9}
+#r h3{color:var(--p);margin:1.5rem 0 .4rem}
+#r .bx{background:var(--c);border:1px solid var(--b);border-right:4px solid var(--p);border-radius:6px;padding:.6rem .9rem;margin:.8rem 0}
+#r button{background:var(--p);color:var(--bg);border:0;border-radius:6px;padding:.4rem 1rem;font:inherit;cursor:pointer}
 </style>
 </head>
 <body>
@@ -44,8 +51,14 @@ h2{font-size:1.05rem;margin:1.6rem 0 .6rem;padding-right:.7rem;border-right:4px 
 <select id="type" aria-label="النوع"></select>
 </div>
 <div id="out"></div>
+<h2>روابط رسمية مفيدة</h2>
+<div class="g lk">
+<a class="card" href="https://www.onec.dz" target="_blank" rel="noopener"><span class="tag">الديوان الوطني للامتحانات والمسابقات</span><b>onec.dz</b><small>نتائج وإعلانات البكالوريا وشهادة التعليم المتوسط</small></a>
+<a class="card" href="https://www.onefd.edu.dz" target="_blank" rel="noopener"><span class="tag">الديوان الوطني للتعليم والتكوين عن بعد</span><b>onefd.edu.dz</b><small>التعليم والتكوين عن بعد</small></a>
+</div>
 </main>
 <div id="m"><div id="w"></div></div>
+<div id="r"><article id="ra"></article></div>
 <script>
 const T={lesson:'📘 درس',video:'🎬 فيديو',exercise:'✏️ تمارين',exam:'📝 امتحان'};
 const $=id=>document.getElementById(id);
@@ -64,7 +77,9 @@ function render(){
     const [l,s,c]=k.split('|');
     return '<h2>'+esc(nm(D.levels,l))+' - '+esc(nm(D.subjects,s))+' - '+esc(c)+'</h2><div class="g">'+a.map(i=>{
       const inner='<span class="tag '+(i.type==='exam'?'exam':'')+'">'+T[i.type]+'</span><b>'+esc(i.title)+'</b><small>'+esc(i.date||'')+'</small>';
-      return i.type==='video'
+      return i.body
+        ? '<button class="card" data-r="'+esc(i.id)+'">'+inner+'</button>'
+        : i.type==='video'
         ? '<button class="card" data-v="'+esc(i.url)+'">'+inner+'</button>'
         : '<a class="card" href="'+esc(i.url)+'" target="_blank" rel="noopener">'+inner+'</a>';
     }).join('')+'</div>';
@@ -78,8 +93,15 @@ function openV(u){
 }
 function closeV(){$('m').classList.remove('o');$('w').innerHTML=''}
 $('m').onclick=e=>{if(e.target.id==='m')closeV()};
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeV()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeV();$('r').classList.remove('o')}});
 $('out').onclick=e=>{const b=e.target.closest('[data-v]');if(b)openV(b.dataset.v)};
+$('out').addEventListener('click',e=>{
+  const b=e.target.closest('[data-r]');if(!b)return;
+  const i=D.items.find(x=>x.id===b.dataset.r);
+  $('ra').innerHTML='<button id="rx">رجوع</button><h1>'+esc(i.title)+'</h1>'+i.body;
+  $('r').classList.add('o');
+  $('rx').onclick=()=>$('r').classList.remove('o');
+});
 ['q','level','subject','type'].forEach(id=>$(id).addEventListener('input',render));
 fetch('data/content.json?'+Date.now()).then(r=>r.json()).then(d=>{
   D=d;
