@@ -1,16 +1,93 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>منصة الثانوية</title>
-  <style>
-    body { font-family: Tahoma, Arial, sans-serif; text-align: center; margin: 0; padding: 4rem 1rem; background: #f5f7fb; color: #222; }
-    h1 { color: #2b5fd9; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>منصة الثانوية - دروس وفيديوهات وامتحانات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f7f4;--c:#fff;--t:#14231b;--m:#5d6f64;--p:#0b6b3a;--r:#c8322b;--b:#d9e4dc}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1511;--c:#15201a;--t:#e6efe9;--m:#93a79b;--p:#4cc98a;--r:#ff7a70;--b:#26372d}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Tajawal,Tahoma,sans-serif;background:var(--bg);color:var(--t);line-height:1.6}
+header{background:var(--p);color:#fff;padding:2.5rem 1rem 2rem}
+header div{max-width:960px;margin:auto}
+h1{margin:0;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:800}
+header p{margin:.4rem 0 0;opacity:.9}
+main{max-width:960px;margin:auto;padding:1rem}
+.f{display:flex;flex-wrap:wrap;gap:.5rem;margin:.5rem 0 1rem}
+.f select,.f input{flex:1 1 150px;padding:.65rem;border:1px solid var(--b);border-radius:6px;background:var(--c);color:var(--t);font:inherit}
+.f select:focus,.f input:focus,.card:focus-visible{outline:2px solid var(--p);outline-offset:2px}
+h2{font-size:1.05rem;margin:1.6rem 0 .6rem;padding-right:.7rem;border-right:4px solid var(--p)}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.7rem}
+.card{display:block;width:100%;text-align:right;font:inherit;background:var(--c);border:1px solid var(--b);border-radius:6px;padding:.8rem;cursor:pointer;color:inherit;text-decoration:none}
+.card:hover{border-color:var(--p)}
+.tag{font-size:.8rem;font-weight:700;color:var(--p)}
+.tag.exam{color:var(--r)}
+.card b{display:block}
+.card small{color:var(--m)}
+.e{text-align:center;color:var(--m);padding:3rem 1rem}
+#m{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;padding:1rem}
+#m.o{display:flex}
+#w{width:100%;max-width:800px;aspect-ratio:16/9;position:relative}
+#w iframe,#w video{width:100%;height:100%;border:0;border-radius:6px;background:#000}
+#x{position:absolute;top:-2.4rem;left:0;background:#fff;border:0;border-radius:6px;padding:.3rem .9rem;cursor:pointer;font:inherit}
+</style>
 </head>
 <body>
-  <h1>مرحبًا بكم في منصة الثانوية</h1>
-  <p>الموقع قيد الإنشاء...</p>
+<header><div><h1>منصة الثانوية</h1><p>دروس، فيديوهات، تمارين وامتحانات لكل المستويات</p></div></header>
+<main>
+<div class="f">
+<input id="q" type="search" placeholder="ابحث عن درس أو فصل..." aria-label="بحث">
+<select id="level" aria-label="المستوى"></select>
+<select id="subject" aria-label="المادة"></select>
+<select id="type" aria-label="النوع"></select>
+</div>
+<div id="out"></div>
+</main>
+<div id="m"><div id="w"></div></div>
+<script>
+const T={lesson:'📘 درس',video:'🎬 فيديو',exercise:'✏️ تمارين',exam:'📝 امتحان'};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const yt=u=>{const m=u.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);return m&&'https://www.youtube.com/embed/'+m[1]};
+let D={levels:[],subjects:[],items:[]};
+function fill(id,a,all){$(id).innerHTML='<option value="">'+all+'</option>'+a.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join('')}
+function render(){
+  const q=$('q').value.trim(),L=$('level').value,S=$('subject').value,Y=$('type').value;
+  const items=D.items.filter(i=>(!L||i.level===L)&&(!S||i.subject===S)&&(!Y||i.type===Y)&&(!q||(i.title+i.chapter).includes(q)));
+  if(!items.length){$('out').innerHTML='<p class="e">لا يوجد محتوى بعد. جرّب تغيير الفلاتر.</p>';return}
+  const groups={};
+  items.forEach(i=>(groups[i.level+'|'+i.subject+'|'+i.chapter]??=[]).push(i));
+  const nm=(a,id)=>(a.find(x=>x.id===id)||{name:id}).name;
+  $('out').innerHTML=Object.entries(groups).map(([k,a])=>{
+    const [l,s,c]=k.split('|');
+    return '<h2>'+esc(nm(D.levels,l))+' - '+esc(nm(D.subjects,s))+' - '+esc(c)+'</h2><div class="g">'+a.map(i=>{
+      const inner='<span class="tag '+(i.type==='exam'?'exam':'')+'">'+T[i.type]+'</span><b>'+esc(i.title)+'</b><small>'+esc(i.date||'')+'</small>';
+      return i.type==='video'
+        ? '<button class="card" data-v="'+esc(i.url)+'">'+inner+'</button>'
+        : '<a class="card" href="'+esc(i.url)+'" target="_blank" rel="noopener">'+inner+'</a>';
+    }).join('')+'</div>';
+  }).join('');
+}
+function openV(u){
+  const e=yt(u);
+  $('w').innerHTML='<button id="x">إغلاق</button>'+(e?'<iframe src="'+e+'" allowfullscreen></iframe>':'<video src="'+esc(u)+'" controls autoplay></video>');
+  $('m').classList.add('o');
+  $('x').onclick=closeV;
+}
+function closeV(){$('m').classList.remove('o');$('w').innerHTML=''}
+$('m').onclick=e=>{if(e.target.id==='m')closeV()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeV()});
+$('out').onclick=e=>{const b=e.target.closest('[data-v]');if(b)openV(b.dataset.v)};
+['q','level','subject','type'].forEach(id=>$(id).addEventListener('input',render));
+fetch('data/content.json?'+Date.now()).then(r=>r.json()).then(d=>{
+  D=d;
+  fill('level',d.levels,'كل المستويات');
+  fill('subject',d.subjects,'كل المواد');
+  fill('type',Object.entries(T).map(([id,name])=>({id,name})),'كل الأنواع');
+  render();
+}).catch(()=>{$('out').innerHTML='<p class="e">تعذر تحميل المحتوى.</p>'});
+</script>
 </body>
 </html>
